@@ -95,5 +95,14 @@
   <ItemGroup>
     <None Include="Resources\2024-07-31 19_21_44-universidad kino logo - Buscar con Google - Brave.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\racoon-pedro.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\racoon-pedro1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\raccoon-dance.gif" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

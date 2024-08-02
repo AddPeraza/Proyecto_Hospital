@@ -24,7 +24,7 @@ namespace Proyecto_Hospital
 
             if(username == "Adderly" && pass == "123")
             {
-                //MessageBox.Show("Acceso Correcto");
+               MessageBox.Show("Acceso Correcto");
                 this.Hide();
                 Dashboard ds = new Dashboard();
                 ds.Show();
@@ -34,6 +34,11 @@ namespace Proyecto_Hospital
                 MessageBox.Show("Usuario/Contraseña Incorrectos");
             }
 
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
         }
     }
 }
