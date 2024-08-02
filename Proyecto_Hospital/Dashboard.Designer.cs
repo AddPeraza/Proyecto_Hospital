@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDiag = new System.Windows.Forms.Button();
             this.btnHistorial = new System.Windows.Forms.Button();
@@ -38,9 +39,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.txtMedicamento = new System.Windows.Forms.TextBox();
+            this.txtDiagnostico = new System.Windows.Forms.TextBox();
+            this.txtSintomas = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,10 +63,19 @@
             this.txtEdad = new System.Windows.Forms.TextBox();
             this.txtDireccion = new System.Windows.Forms.TextBox();
             this.txtNombre = new System.Windows.Forms.TextBox();
+            this.hospitalDataSet = new Proyecto_Hospital.hospitalDataSet();
+            this.pacienteDiagBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.pacienteDiagTableAdapter = new Proyecto_Hospital.hospitalDataSetTableAdapters.pacienteDiagTableAdapter();
+            this.pidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.sintomasDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.diagnosticoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.medicamentoDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hospitalDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pacienteDiagBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // btnAdd
@@ -140,7 +150,6 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.btnGuardar);
             this.panel1.Controls.Add(this.cbGenero);
@@ -163,9 +172,9 @@
             // panel2
             // 
             this.panel2.Controls.Add(this.btnSave);
-            this.panel2.Controls.Add(this.textBox4);
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.textBox2);
+            this.panel2.Controls.Add(this.txtMedicamento);
+            this.panel2.Controls.Add(this.txtDiagnostico);
+            this.panel2.Controls.Add(this.txtSintomas);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label6);
             this.panel2.Controls.Add(this.label5);
@@ -173,7 +182,7 @@
             this.panel2.Controls.Add(this.txtpid);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Location = new System.Drawing.Point(3, 0);
+            this.panel2.Location = new System.Drawing.Point(187, 35);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(688, 403);
             this.panel2.TabIndex = 19;
@@ -187,27 +196,28 @@
             this.btnSave.TabIndex = 14;
             this.btnSave.Text = "Guardar";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // textBox4
+            // txtMedicamento
             // 
-            this.textBox4.Location = new System.Drawing.Point(90, 369);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(123, 20);
-            this.textBox4.TabIndex = 11;
+            this.txtMedicamento.Location = new System.Drawing.Point(90, 369);
+            this.txtMedicamento.Name = "txtMedicamento";
+            this.txtMedicamento.Size = new System.Drawing.Size(123, 20);
+            this.txtMedicamento.TabIndex = 11;
             // 
-            // textBox3
+            // txtDiagnostico
             // 
-            this.textBox3.Location = new System.Drawing.Point(90, 311);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(123, 20);
-            this.textBox3.TabIndex = 10;
+            this.txtDiagnostico.Location = new System.Drawing.Point(90, 311);
+            this.txtDiagnostico.Name = "txtDiagnostico";
+            this.txtDiagnostico.Size = new System.Drawing.Size(123, 20);
+            this.txtDiagnostico.TabIndex = 10;
             // 
-            // textBox2
+            // txtSintomas
             // 
-            this.textBox2.Location = new System.Drawing.Point(90, 281);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(123, 20);
-            this.textBox2.TabIndex = 9;
+            this.txtSintomas.Location = new System.Drawing.Point(90, 281);
+            this.txtSintomas.Name = "txtSintomas";
+            this.txtSintomas.Size = new System.Drawing.Size(123, 20);
+            this.txtSintomas.TabIndex = 9;
             // 
             // label7
             // 
@@ -241,10 +251,18 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.AutoGenerateColumns = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.pidDataGridViewTextBoxColumn,
+            this.sintomasDataGridViewTextBoxColumn,
+            this.diagnosticoDataGridViewTextBoxColumn,
+            this.medicamentoDataGridViewTextBoxColumn});
+            this.dataGridView1.DataSource = this.pacienteDiagBindingSource;
             this.dataGridView1.Location = new System.Drawing.Point(3, 103);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(682, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(467, 78);
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -405,12 +423,51 @@
             this.txtNombre.Size = new System.Drawing.Size(121, 20);
             this.txtNombre.TabIndex = 0;
             // 
+            // hospitalDataSet
+            // 
+            this.hospitalDataSet.DataSetName = "hospitalDataSet";
+            this.hospitalDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // pacienteDiagBindingSource
+            // 
+            this.pacienteDiagBindingSource.DataMember = "pacienteDiag";
+            this.pacienteDiagBindingSource.DataSource = this.hospitalDataSet;
+            // 
+            // pacienteDiagTableAdapter
+            // 
+            this.pacienteDiagTableAdapter.ClearBeforeFill = true;
+            // 
+            // pidDataGridViewTextBoxColumn
+            // 
+            this.pidDataGridViewTextBoxColumn.DataPropertyName = "pid";
+            this.pidDataGridViewTextBoxColumn.HeaderText = "pid";
+            this.pidDataGridViewTextBoxColumn.Name = "pidDataGridViewTextBoxColumn";
+            // 
+            // sintomasDataGridViewTextBoxColumn
+            // 
+            this.sintomasDataGridViewTextBoxColumn.DataPropertyName = "sintomas";
+            this.sintomasDataGridViewTextBoxColumn.HeaderText = "sintomas";
+            this.sintomasDataGridViewTextBoxColumn.Name = "sintomasDataGridViewTextBoxColumn";
+            // 
+            // diagnosticoDataGridViewTextBoxColumn
+            // 
+            this.diagnosticoDataGridViewTextBoxColumn.DataPropertyName = "diagnostico";
+            this.diagnosticoDataGridViewTextBoxColumn.HeaderText = "diagnostico";
+            this.diagnosticoDataGridViewTextBoxColumn.Name = "diagnosticoDataGridViewTextBoxColumn";
+            // 
+            // medicamentoDataGridViewTextBoxColumn
+            // 
+            this.medicamentoDataGridViewTextBoxColumn.DataPropertyName = "medicamento";
+            this.medicamentoDataGridViewTextBoxColumn.HeaderText = "medicamento";
+            this.medicamentoDataGridViewTextBoxColumn.Name = "medicamentoDataGridViewTextBoxColumn";
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(890, 450);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnSalir);
@@ -428,6 +485,8 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hospitalDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pacienteDiagBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -458,9 +517,9 @@
         private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox txtMedicamento;
+        private System.Windows.Forms.TextBox txtDiagnostico;
+        private System.Windows.Forms.TextBox txtSintomas;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
@@ -468,5 +527,12 @@
         private System.Windows.Forms.TextBox txtpid;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private hospitalDataSet hospitalDataSet;
+        private System.Windows.Forms.BindingSource pacienteDiagBindingSource;
+        private hospitalDataSetTableAdapters.pacienteDiagTableAdapter pacienteDiagTableAdapter;
+        private System.Windows.Forms.DataGridViewTextBoxColumn pidDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn sintomasDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn diagnosticoDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn medicamentoDataGridViewTextBoxColumn;
     }
 }

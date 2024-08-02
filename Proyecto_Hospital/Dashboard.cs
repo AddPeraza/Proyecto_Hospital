@@ -26,6 +26,8 @@ namespace Proyecto_Hospital
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'hospitalDataSet.pacienteDiag' table. You can move, or remove it, as needed.
+            this.pacienteDiagTableAdapter.Fill(this.hospitalDataSet.pacienteDiag);
             this.panel1.Visible = false;
             this.panel2.Visible = false;
             
@@ -34,6 +36,8 @@ namespace Proyecto_Hospital
         private void btnAdd_Click(object sender, EventArgs e)
         {
             panel1.Visible=true;
+            panel2.Visible=false;
+            
         }
 
         private void btnSalir_Click(object sender, EventArgs e)
@@ -52,15 +56,20 @@ namespace Proyecto_Hospital
             String telefono = txtTelefono.Text;
 
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source =DESKTOP-L24LCET\\SQLEXPRESS;Database=hospital;Integrated Security=true";
+            con.ConnectionString = "Data Source =DESKTOP-L24LCET\\SQLEXPRESS;Database=hospital;Trusted_Connection=true";
                 con.Open();
                 SqlCommand cmd = new SqlCommand
                 {
                     Connection = con,
-
-                    CommandText = "insert into Addpatient values ('" + nombre + "','" + direccion + "', " + telefono + "," + genero + "," + edad
+                    CommandText = "INSERT INTO Addpatient (Nombre, Direccion, Telefono, Genero, Edad) VALUES (@Nombre, @Direccion, @Telefono, @Genero, @Edad)"
                 };
-               
+                cmd.Parameters.AddWithValue("@Nombre", nombre);
+                cmd.Parameters.AddWithValue("@Direccion", direccion);
+                cmd.Parameters.AddWithValue("@Telefono", telefono);
+                cmd.Parameters.AddWithValue("@Genero", genero);
+                cmd.Parameters.AddWithValue("@Edad", edad);
+
+                cmd.ExecuteNonQuery();
 
                 SqlDataAdapter DA = new SqlDataAdapter(cmd);
                 DataSet DS = new DataSet();
@@ -68,7 +77,7 @@ namespace Proyecto_Hospital
                 con.Close();
             }
 
-            catch (Exception)
+            catch (Exception ex)
             { 
                 MessageBox.Show("Formato invalido ");
             
@@ -88,14 +97,14 @@ namespace Proyecto_Hospital
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if(txtId.Text != "")
+            if(txtpid.Text != "")
             { 
 
-            int pid = Convert.ToInt32(txtId.Text);
-
+            int pid = Convert.ToInt32(txtpid.Text);
+                
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = "data source DESKTOP-L24LCET\\SQLEXPRESS;database =hospital;integrated security = True";
-                con.Open();
+            con.ConnectionString = "Data Source = DESKTOP - L24LCET\\SQLEXPRESS; Database = hospital; Trusted_Connection = true";
+            
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandText = "SELECT * FROM Addpatient WHERE pid = " + pid + "";
@@ -113,12 +122,54 @@ namespace Proyecto_Hospital
 
         private void btnDiag_Click(object sender, EventArgs e)
         {
-            panel2.Visible = true;
+            panel1.Visible = true;
+            panel2.Visible= true;
+            
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                int pid = Convert.ToInt32(txtpid.Text);
+                String sintomas = txtSintomas.Text;
+                String diagnostico = txtDiagnostico.Text;
+                String medicamento = txtMedicamento.Text;
+
+                SqlConnection con = new SqlConnection();
+                con.ConnectionString = "Data Source =DESKTOP-L24LCET\\SQLEXPRESS;Database=hospital;Trusted_Connection=true";
+                con.Open();
+                SqlCommand cmd = new SqlCommand
+                {
+                    Connection = con,
+                    CommandText = "INSERT INTO pacienteDiag (sintomas,diagnostico,medicamento) VALUES (@Sintomas, @Diagnostico @Medicamento)"
+                };
+                cmd.Parameters.AddWithValue("@Sintomas", sintomas);
+                cmd.Parameters.AddWithValue("@Diagnostico", diagnostico);
+                cmd.Parameters.AddWithValue("@Medicamento", medicamento);
+                cmd.ExecuteNonQuery();
+                SqlDataAdapter DA = new SqlDataAdapter(cmd);
+                DataSet DS = new DataSet();
+                DA.Fill(DS);
+            }
+            catch(Exception) 
+            {
+                MessageBox.Show("Datos incorrectos o hay algun campo en blanco");
+
+            }
+
+            MessageBox.Show("Datos Guardados correctamente");
+            txtDiagnostico.Clear();
+            txtMedicamento.Clear();
+            txtSintomas.Clear();
+            txtpid.Clear();
         }
     }
 }
