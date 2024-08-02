@@ -103,15 +103,15 @@ namespace Proyecto_Hospital
             int pid = Convert.ToInt32(txtpid.Text);
                 
             SqlConnection con = new SqlConnection();
-            con.ConnectionString = "Data Source = DESKTOP - L24LCET\\SQLEXPRESS; Database = hospital; Trusted_Connection = true";
-            
-            SqlCommand cmd = new SqlCommand();
+                //con.ConnectionString = "Data Source = DESKTOP - L24LCET\\SQLEXPRESS; Database = hospital; Trusted_Connection = true";
+                con.ConnectionString = "Server=DESKTOP-L24LCET\\SQLEXPRESS;Database=hospital;Integrated Security=True";
+                SqlCommand cmd = new SqlCommand();
             cmd.Connection = con;
             cmd.CommandText = "SELECT * FROM Addpatient WHERE pid = " + pid + "";
             SqlDataAdapter DA = new SqlDataAdapter(cmd);
             DataSet DS = new DataSet();
-            DA.Fill(DS);
-            dataGridView1.DataSource = DS.Tables[0];
+           //DA.Fill(DS);
+           //dataGridView1.DataSource = DS.Tables[0];
             }
         }
 
@@ -144,7 +144,7 @@ namespace Proyecto_Hospital
                 String medicamento = txtMedicamento.Text;
 
                 SqlConnection con = new SqlConnection();
-                con.ConnectionString = "Data Source =DESKTOP-L24LCET\\SQLEXPRESS;Database=hospital;Trusted_Connection=true";
+                con.ConnectionString = "Data Source = DESKTOP - L24LCET\\SQLEXPRESS; Initial Catalog = hospital; Integrated Security = True; Encrypt = False; Trust Server Certificate = True";
                 con.Open();
                 SqlCommand cmd = new SqlCommand
                 {
@@ -170,6 +170,45 @@ namespace Proyecto_Hospital
             txtMedicamento.Clear();
             txtSintomas.Clear();
             txtpid.Clear();
+        }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Proyecto de Gestion de Hospitales , hecho por Adderly Peraza, Universidad Kino SCOMM6");
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+
+            // Cadena de conexión que se usará para la prueba
+            string connectionString = "Data Source=DESKTOP-L24LCET\\SQLEXPRESS;Initial Catalog=hospital;Integrated Security=True";
+
+            // Intentar abrir la conexión
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open(); // Intenta abrir la conexión
+
+                    // Si la conexión es exitosa, mostrar un mensaje
+                    MessageBox.Show("Conexión exitosa a la base de datos.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (SqlException ex)
+                {
+                    // Si hay un error de conexión, mostrar un mensaje con los detalles
+                    MessageBox.Show("Error al conectar con la base de datos: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    // Asegurarse de cerrar la conexión si está abierta
+                    if (con.State == ConnectionState.Open)
+                    {
+                        con.Close();
+                    }
+                    this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
+
+                }
+            }
         }
     }
 }

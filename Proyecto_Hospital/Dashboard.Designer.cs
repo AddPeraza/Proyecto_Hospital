@@ -82,7 +82,7 @@
             // 
             this.btnAdd.Location = new System.Drawing.Point(25, 72);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(114, 23);
+            this.btnAdd.Size = new System.Drawing.Size(130, 23);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "Agregar Paciente";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -92,7 +92,7 @@
             // 
             this.btnDiag.Location = new System.Drawing.Point(25, 119);
             this.btnDiag.Name = "btnDiag";
-            this.btnDiag.Size = new System.Drawing.Size(114, 23);
+            this.btnDiag.Size = new System.Drawing.Size(130, 23);
             this.btnDiag.TabIndex = 2;
             this.btnDiag.Text = "Agregar Diagnostico";
             this.btnDiag.UseVisualStyleBackColor = true;
@@ -102,19 +102,21 @@
             // 
             this.btnHistorial.Location = new System.Drawing.Point(25, 166);
             this.btnHistorial.Name = "btnHistorial";
-            this.btnHistorial.Size = new System.Drawing.Size(114, 23);
+            this.btnHistorial.Size = new System.Drawing.Size(130, 23);
             this.btnHistorial.TabIndex = 3;
-            this.btnHistorial.Text = "Historial";
+            this.btnHistorial.Text = "Probar Conexion a BD";
             this.btnHistorial.UseVisualStyleBackColor = true;
+            this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
             // 
             // btnInfo
             // 
             this.btnInfo.Location = new System.Drawing.Point(25, 209);
             this.btnInfo.Name = "btnInfo";
-            this.btnInfo.Size = new System.Drawing.Size(114, 23);
+            this.btnInfo.Size = new System.Drawing.Size(130, 23);
             this.btnInfo.TabIndex = 4;
             this.btnInfo.Text = "Informacion";
             this.btnInfo.UseVisualStyleBackColor = true;
+            this.btnInfo.Click += new System.EventHandler(this.btnInfo_Click);
             // 
             // label2
             // 
